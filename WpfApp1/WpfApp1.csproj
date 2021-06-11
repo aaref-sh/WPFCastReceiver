@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ic_menu_send.png" />
+    <None Remove="mu.jpg" />
+    <None Remove="su.jpg" />
+    <None Remove="mm.jpg" />
+    <None Remove="sm.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Emoji.Wpf" Version="0.3.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.7" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StreamClient\StreamClient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="ic_menu_send.png" />
+    <Resource Include="mu.jpg" />
+    <Resource Include="su.jpg" />
+    <Resource Include="mm.jpg" />
+    <Resource Include="sm.jpg" />
+  </ItemGroup>
+
+</Project>
