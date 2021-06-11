@@ -29,7 +29,6 @@ namespace WpfApp1
             Hide();
             Close();
         }
-
         public Logger()
         {
             InitializeComponent();

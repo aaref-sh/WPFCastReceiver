@@ -10,16 +10,19 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using Emoji.Wpf;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VoiceClient;
+using Brushes = System.Windows.Media.Brushes;
 using Image = System.Drawing.Image;
 using Point = System.Drawing.Point;
 using Rectangle = System.Drawing.Rectangle;
 using Size = System.Drawing.Size;
+using TextBlock = Emoji.Wpf.TextBlock;
 
 namespace WpfApp1
 {
@@ -64,7 +67,35 @@ namespace WpfApp1
         }
         void NewMessage(string sender, string message)
         {
-            MessagesList.Text += "\n\n" + sender + "\n" + message;
+            Border b = new Border();
+            b.CornerRadius = new CornerRadius(8);
+            b.BorderBrush = Brushes.Gray;
+            if(sender == Logger.name)b.BorderBrush = Brushes.DarkGreen;
+            b.BorderThickness = new Thickness(2);
+            
+            Frame container = new Frame();
+            container.MouseDoubleClick += (s,e) => { };
+            b.Margin = new Thickness { Left = 5,Right=5,Top=5 };
+            StackPanel msg = new StackPanel();
+            Label sndr = new Label();
+            sndr.FontSize = 11;
+            sndr.Foreground = Brushes.DarkGray;
+            if(sender == Logger.name)sndr.Foreground = Brushes.DarkGreen;
+
+            TextBlock mesg = new TextBlock();
+            mesg.Text = message;
+            mesg.FontSize = 14;
+            mesg.Foreground = Brushes.Black;
+            mesg.Margin = new Thickness { Right = 3, Bottom = 3, Left = 3 };
+            sndr.Content = sender;
+            if (ia(message[0])) mesg.FlowDirection = FlowDirection.RightToLeft;
+            msg.Children.Add(sndr);
+            msg.Children.Add(mesg);
+            container.Content = msg;
+            
+            b.Child = container;
+            MessageList.Children.Add(b);
+            scrollViewer.ScrollToEnd();
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -73,13 +104,6 @@ namespace WpfApp1
             sc.ConnectToServer();
         }
 
-        private void SendMessage(object sender, RoutedEventArgs e)
-        {
-            if (MessageTextBox.Text != string.Empty)
-            {
-                
-            }
-        }
         private void pbmic_Click(object sender, EventArgs e)
         {
             Uri resourceUri = new Uri("/mm.jpg", UriKind.Relative);
@@ -142,8 +166,16 @@ namespace WpfApp1
         {
             if(MessageTextBox.Text.Trim() != string.Empty)
             {
-                if(ia(MessageTextBox.Text[0]))MessageTextBox.TextAlignment = TextAlignment.Right;
-                else MessageTextBox.TextAlignment = TextAlignment.Left;
+                if (ia(MessageTextBox.Text[0]))
+                {
+                    //MessageTextBox.FlowDirection = FlowDirection.RightToLeft;
+                    MessageTextBox.TextAlignment = TextAlignment.Right;
+                }
+                else
+                {
+                    //MessageTextBox.FlowDirection = FlowDirection.LeftToRight;
+                    MessageTextBox.TextAlignment = TextAlignment.Left;
+                }
             }
         }
         public static bool ia(char glyph)

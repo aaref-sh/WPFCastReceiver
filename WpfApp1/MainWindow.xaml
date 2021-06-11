@@ -20,7 +20,11 @@
                     <emoji:Picker x:Name="picker" Picked="picker_Picked"/>
                     <emoji:TextBox x:Name="MessageTextBox" KeyDown="MessageTextBox_KeyDown" TextChanged="MessageTextBox_TextChanged" FontSize="16" FontFamily="Times New Roman" TextAlignment="Right"/>
                 </DockPanel>
-                <emoji:RichTextBox x:Name="MessagesList" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto" x:Name="scrollViewer">
+                    <StackPanel x:Name="MessageList">
+
+                    </StackPanel>
+                </ScrollViewer>
             </DockPanel>
             <Image x:Name="pb" Stretch="Uniform"/>
 
